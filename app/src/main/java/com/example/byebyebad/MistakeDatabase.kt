@@ -26,6 +26,7 @@ abstract class MistakeDatabase:RoomDatabase() {
                     MistakeDatabase::class.java,
                     "mistake_database"
                 ).build()
+                //assign the instance to the INSTANCE to keep a reference to the database
                 INSTANCE = instance
                 instance
             }

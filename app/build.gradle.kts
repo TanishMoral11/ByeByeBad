@@ -50,6 +50,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    val lifecycle_version = "2.8.4"
+    val arch_version = "2.2.0"
     // Room components
     implementation("androidx.room:room-runtime:2.6.0")
     kapt("androidx.room:room-compiler:2.6.0") // Use kapt for Room compiler
@@ -57,6 +59,12 @@ dependencies {
 
     // For displaying charts later
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
 }
 
 kapt {
