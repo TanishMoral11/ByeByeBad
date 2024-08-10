@@ -1,20 +1,44 @@
 package com.example.byebyebad
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var appDatabase: AppDatabase
+    private lateinit var mistakeDao: MistakeDao
+    private lateinit var adapter: MistakeAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        appDatabase = AppDatabase.getDatabase(this)
+        mistakeDao = appDatabase.mistakeDao()
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val fabAdd = findViewById<FloatingActionButton>(R.id.fab_add)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val mistakes = mistakeDao.getAllMistakes()
+            runOnUiThread {
+                adapter = MistakeAdapter(mistakes, mistakeDao)
+                recyclerView.adapter = adapter
+            }
+        }
+
+        fabAdd.setOnClickListener {
+            // Add functionality to show dialog or new activity to add new mistakes
         }
     }
 }

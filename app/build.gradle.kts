@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt") // Apply the Kotlin Kapt plugin
+    id("kotlin-kapt")
 }
 
 android {
@@ -14,7 +14,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,7 +33,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
     buildFeatures {
         viewBinding = true
     }
@@ -54,18 +52,22 @@ dependencies {
     val arch_version = "2.2.0"
     // Room components
     implementation("androidx.room:room-runtime:2.6.0")
-    kapt("androidx.room:room-compiler:2.6.0") // Use kapt for Room compiler
+    kapt("androidx.room:room-compiler:2.6.0")
     implementation("androidx.room:room-ktx:2.6.0")
 
-    // For displaying charts later
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
+    // For displaying charts
+//    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // ViewModel utilities for Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
+    // RecyclerView
+    implementation ("androidx.recyclerview:recyclerview:1.3.0")
+
+    implementation ("com.google.android.material:material:1.9.0")
 }
+
 
 kapt {
     correctErrorTypes = true
